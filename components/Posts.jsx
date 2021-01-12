@@ -1,6 +1,8 @@
 import React from 'react'
 import { PageHeader } from 'antd';
-import Post from './Post'
+import PostSnippet from './PostSnippet'
+import api from '../mock_api'
+import _ from 'lodash'
 
 function Posts(props) {
     return (
@@ -10,12 +12,21 @@ function Posts(props) {
                     style={{
                         border: '1px solid rgb(235, 237, 240)',
                     }}
-                    onBack={() => null}
                     title="Posts"
                 />
             </div>
-            <div className="articles_container">
-                <Post />
+            <div className="posts_content_container">
+                {
+                    _.map(api, (article) => {
+                        return (
+                            <PostSnippet
+                                key={article.id}
+                                id={article.id}
+                                title={article.title}
+                                content={article.content} />
+                        )
+                    })
+                }
             </div>
         </div>
     )
