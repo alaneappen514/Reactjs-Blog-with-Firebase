@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { PageHeader, Card } from 'antd';
-import api from '../mock_api'
 import { navigate } from "@reach/router"
+import db from '../firebase'
 
 const Post = (props) => {
 
@@ -9,9 +9,17 @@ const Post = (props) => {
     const [content, setContent] = useState('')
 
     useEffect(() => {
-        let post = api[props.id]
-        setTitle(post.title)
-        setContent(post.content)
+        //Gets a specific post from Posts Collection
+        let postRef = db
+            .collection('posts')
+            .doc(props.id)
+
+        postRef.get().then(doc => {
+            let { content, title } = doc.data()
+            setTitle(title)
+            setContent(content)
+        })
+
     }, [])
 
     return (

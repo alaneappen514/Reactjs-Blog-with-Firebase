@@ -10,7 +10,7 @@ function App(props) {
         <div className="app_container">
             <Router>
                 <CreatePost default />
-                <Posts path="/allpost" />
+                <Posts path="/posts" />
                 <Post path="post/:id" />
             </Router>
         </div>

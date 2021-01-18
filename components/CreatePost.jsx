@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { PageHeader, Input, Button } from 'antd';
+import { PageHeader, Input, Button, notification } from 'antd';
+import { CheckCircleTwoTone } from '@ant-design/icons';
+import { navigate } from "@reach/router"
 const { TextArea } = Input;
 import db from '../firebase'
 
@@ -12,6 +14,16 @@ const CreatePost = (props) => {
     const onTitleChange = (event) => setTitle(event.target.value)
     const onContentChange = (event) => setContent(event.target.value)
 
+
+    const openNotification = () => {
+        notification.open({
+            message: title,
+            description:
+                'Post successfully added',
+            icon: <CheckCircleTwoTone style={{ color: '#108ee9' }} />,
+        });
+    };
+
     const createPost = () => {
         let postRef = db.collection('posts')
         let payload = { title, content }
@@ -23,6 +35,11 @@ const CreatePost = (props) => {
             .catch(function (error) {
                 console.error("Error writing document: ", error);
             });
+
+        setTitle('')
+        setContent('')
+        openNotification()
+        navigate(`/posts`)
     }
 
 
