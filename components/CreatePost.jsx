@@ -13,7 +13,16 @@ const CreatePost = (props) => {
     const onContentChange = (event) => setContent(event.target.value)
 
     const createPost = () => {
-        console.log(title + content)
+        let postRef = db.collection('posts')
+        let payload = { title, content }
+
+        postRef.add(payload)
+            .then(function (doc) {
+                console.log("Document successfully written!", doc.id);
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
     }
 
 
