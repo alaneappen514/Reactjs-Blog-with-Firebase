@@ -49,7 +49,7 @@ function Posts(props) {
                             <PostSnippet
                                 key={article.id}
                                 id={article.id}
-                                title={article.title}
+                                title={_.capitalize(article.title)}
                                 content={article.content.substring(0, 1000).concat("....")} />
                         )
                     })
