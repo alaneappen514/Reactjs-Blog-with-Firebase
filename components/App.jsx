@@ -3,6 +3,7 @@ import Posts from './Posts'
 import "antd/dist/antd.css";
 import Post from './Post'
 import CreatePost from './CreatePost'
+import UpdatePost from './UpdatePost'
 import { Router, Link } from "@reach/router";
 import { Menu } from 'antd';
 import { BookOutlined, EditOutlined } from '@ant-design/icons';
@@ -25,6 +26,7 @@ function App(props) {
                 <Posts path="posts" default />
                 <Post path="post/:id" />
                 <CreatePost path="create_post" />
+                <UpdatePost path="edit_post/:id" />
             </Router>
         </div>
     )
