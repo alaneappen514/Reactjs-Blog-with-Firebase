@@ -13,9 +13,8 @@ function Posts(props) {
         let postsRef = db.collection('posts')
 
         postsRef
-            .get()
-            .then(posts => {
-                posts.forEach(post => {
+            .onSnapshot(async posts => {
+                let postsData = await posts.docs.map(post => {
                     let data = post.data()
                     //Instead of let id = post.id you can destructor using {id} = post
                     let { id } = post
@@ -24,9 +23,11 @@ function Posts(props) {
                         id,
                         ...data
                     }
-                    setPosts((posts) => [...posts, payload])
 
-                })
+                    return payload
+                });
+
+                setPosts(postsData)
             })
     }, [])
 
@@ -42,7 +43,6 @@ function Posts(props) {
                 />
             </div>
             <div className="posts_content_container">
-                {console.log(posts)}
                 {
                     _.map(posts, (article) => {
                         return (
@@ -50,7 +50,8 @@ function Posts(props) {
                                 key={article.id}
                                 id={article.id}
                                 title={_.capitalize(article.title)}
-                                content={article.content.substring(0, 1000).concat("....")} />
+                                content={article.content.substring(0, 1000).concat("....")}
+                                user={props.user} />
                         )
                     })
                 }
